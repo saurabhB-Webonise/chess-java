@@ -3,45 +3,9 @@ import chess.Box;
 import chess.base.Piece;
 import chess.pieces.Pawn;
 import chess.utils.Colors;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-interface A {
-    boolean a();
-}
-
-class B implements A {
-
-    void b() {
-        System.out.println("I am B");
-    }
-
-    @Override
-    public boolean a() {
-        System.out.println("B a()");
-        return true;
-    }
-}
-
-class C extends B {
-    @Override
-    public boolean a() {
-
-
-        System.out.println("C a()");
-        return true;
-    }
-
-    void c() {
-        A b = this;
-        b.a();
-        System.out.println("I am C");
-    }
-}
-
 
 public class Main {
 
@@ -73,7 +37,7 @@ public class Main {
                 killedList.add(piece);
             }
             end.setPiece(start.getPiece());
-            System.out.println(box.getPiece().getName());
+            //System.out.println(box.getPiece().getName());
             if (end.getPiece() instanceof Pawn) {
                 Pawn pawn = (Pawn) end.getPiece();
                 pawn.setInitialMove(false);
@@ -112,81 +76,58 @@ public class Main {
         }
     }
 
-    public void test() throws InterruptedException, IOException {
-        int i = 0;
-        while (i != 100) {
-            Thread.sleep(1000);
-
-            System.out.write(String.valueOf(i).getBytes());
-//            try {
-//                Robot robbie = new Robot();
-//                robbie.keyPress(KeyEvent.VK_A); // Holds CTRL key.
-//                robbie.keyRelease(KeyEvent.VK_A); // Releases CTRL key.
-//
-//            } catch (AWTException ex) {
-//
-//            }
-            i++;
-        }
-    }
 
     public static void main(String[] args) {
 
 
-        C c = new C();
-        c.a();
-        c.b();
-        c.c();
+        Board board = new Board();
+        board.initialPoint();
+        display(board);
+        System.out.println("After Move");
+        boolean isloopRunning = true;
+        Scanner scanner = new Scanner(System.in);
+        while (isloopRunning) {
+            System.out.println("To Exit  Press q");
+            int toRow = 0;
+            int toColum = 0;
+            int fromRow = 0;
+            int fromColumn = 0;
+            try {
+                System.out.println("Enter index of start piece");
+                String fromIndex = scanner.nextLine();
+                if (fromIndex.equals("q")) {
+                    isloopRunning = false;
+                    break;
+                }
+                fromRow = Integer.parseInt(fromIndex.charAt(0) + "");
+                fromColumn = Integer.parseInt(fromIndex.charAt(1) + "");
+                System.out.println("Enter index of end box ");
+                String toIndex = scanner.nextLine();
 
-//
-//        Board board = new Board();
-//        board.initialPoint();
-//        display(board);
-//        System.out.println("After Move");
-//        boolean isloopRunning = true;
-//        Scanner scanner = new Scanner(System.in);
-//        while (isloopRunning) {
-//            System.out.println("To Exit  Press q");
-//            int toRow = 0;
-//            int toColum = 0;
-//            int fromRow = 0;
-//            int fromColumn = 0;
-//            try {
-//                System.out.println("Enter index of start piece");
-//                String fromIndex = scanner.nextLine();
-//                if (fromIndex.equals("q")) {
-//                    isloopRunning = false;
-//                    break;
-//                }
-//                fromRow = Integer.parseInt(fromIndex.charAt(0) + "");
-//                fromColumn = Integer.parseInt(fromIndex.charAt(1) + "");
-//                System.out.println("Enter index of end box ");
-//                String toIndex = scanner.nextLine();
-//
-//                if (toIndex.equals("q")) {
-//                    isloopRunning = false;
-//                    break;
-//                }
-//                toRow = Integer.parseInt(toIndex.charAt(0) + "");
-//                toColum = Integer.parseInt(toIndex.charAt(1) + "");
-//
-//            } catch (Exception e) {
-//
-//
-//            }
-//
-//            if (isloopRunning) {
-//                try {
-//                    makeMove(toRow, toColum, board, board.getBox(fromRow, fromColumn));
-//                    display(board);
-//                    for (Piece piece : killedList) {
-//                        System.out.println("piece name: " + piece.getClass().getName() + " | isKilled: " + piece.isKilled() + " | isWhite: " + piece.isWhite());
-//                    }
-//                } catch (Exception e) {
-//                    System.out.println("Index out of bound :" + fromRow + "" + fromColumn);
-//                }
-//            }
-//        }
+                if (toIndex.equals("q")) {
+                    isloopRunning = false;
+                    break;
+                }
+                toRow = Integer.parseInt(toIndex.charAt(0) + "");
+                toColum = Integer.parseInt(toIndex.charAt(1) + "");
+
+            } catch (Exception e) {
+
+
+            }
+
+            if (isloopRunning) {
+                try {
+                    makeMove(toRow, toColum, board, board.getBox(fromRow, fromColumn));
+                    display(board);
+                    for (Piece piece : killedList) {
+                        System.out.println("piece name: " + piece.getClass().getName() + " | isKilled: " + piece.isKilled() + " | isWhite: " + piece.isWhite());
+                    }
+                } catch (Exception e) {
+                    System.out.println("Index out of bound :" + fromRow + "" + fromColumn);
+                }
+            }
+        }
     }
 }
 

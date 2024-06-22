@@ -55,6 +55,7 @@ public abstract class PieceSameMove extends Piece {
         if (isStartAndEndAreSame(start, end)) return CANNOT_MOVE;
         if (isValidMove(start, end)) {
             if (!isPathClear(board, start, end)) return CANNOT_MOVE;
+            if (end.isBoxVacant()) return CAN_MOVE;
             if (isSamePiece(start, end)) return CANNOT_MOVE;
             return CAN_MOVE;
         }
@@ -63,12 +64,9 @@ public abstract class PieceSameMove extends Piece {
 
     public boolean bishopMoves(List<String> validMoves, Board board, Box start, Box end) {
         if (validMoves.contains(getMove(start, end))) {
-            if (end.isBoxVacant()) {
-                return CAN_MOVE;
-            }
-            if (isSamePiece(start, end)) {
-                return CANNOT_MOVE;
-            }
+            // path clear code is remaining for bishop moves
+            if (end.isBoxVacant()) return CAN_MOVE;
+            if (isSamePiece(start, end)) return CANNOT_MOVE;
             return CAN_MOVE;
         }
         return CANNOT_MOVE;
