@@ -51,6 +51,38 @@ public abstract class PieceSameMove extends Piece {
         return isClear;
     }
 
+
+    boolean isPathClear2(Board board, Box start, Box end) {
+
+        boolean f1 = (end.getRow() - start.getRow() < 0);
+
+        boolean isClear = true;
+
+        int row = end.getRow();
+        int column = end.getColumn();
+        while ((f1 ? (row < start.getRow()) : (row > start.getRow()))) {
+
+            if (column > start.getColumn())
+                column--;
+            else
+                column++;
+
+            if (f1) {
+                row++;
+            } else {
+                row--;
+            }
+
+            if (start.getRow() != row && start.getColumn() != column) {
+                if (!board.boxes[row][column].isBoxVacant()) {
+                    isClear = false;
+                    break;
+                }
+            }
+        }
+        return isClear;
+    }
+
     public boolean rookMoves(Board board, Box start, Box end) {
         if (isStartAndEndAreSame(start, end)) return CANNOT_MOVE;
         if (isValidMove(start, end)) {
@@ -64,7 +96,7 @@ public abstract class PieceSameMove extends Piece {
 
     public boolean bishopMoves(List<String> validMoves, Board board, Box start, Box end) {
         if (validMoves.contains(getMove(start, end))) {
-            // path clear code is remaining for bishop moves
+            if (!isPathClear2(board, start, end)) return CANNOT_MOVE;
             if (end.isBoxVacant()) return CAN_MOVE;
             if (isSamePiece(start, end)) return CANNOT_MOVE;
             return CAN_MOVE;

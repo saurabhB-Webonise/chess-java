@@ -3,7 +3,6 @@ package chess.pieces;
 
 import chess.Board;
 import chess.Box;
-import chess.base.Piece;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,12 +22,8 @@ public class Queen extends PieceSameMove {
 
     @Override
     public boolean canMove(Board board, Box start, Box end) {
-        if (rookMoves(board, start, end)) {
-            return CAN_MOVE;
-        }
-        if (bishopMoves(validMoves, board, start, end)) {
-            return CAN_MOVE;
-        }
+        if (rookMoves(board, start, end)) return CAN_MOVE;
+        if (bishopMoves(validMoves, board, start, end)) return CAN_MOVE;
         return CANNOT_MOVE;
     }
 
