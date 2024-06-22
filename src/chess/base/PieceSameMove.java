@@ -1,8 +1,7 @@
-package chess.pieces;
+package chess.base;
 
 import chess.Board;
 import chess.Box;
-import chess.base.Piece;
 
 import java.util.List;
 

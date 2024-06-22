@@ -3,7 +3,7 @@ package chess.pieces;
 
 import chess.Board;
 import chess.Box;
-import chess.base.Piece;
+import chess.base.PieceSameMove;
 
 import java.util.ArrayList;
 import java.util.Arrays;

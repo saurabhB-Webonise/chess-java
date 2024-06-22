@@ -2,7 +2,7 @@ package chess.pieces;
 
 import chess.Board;
 import chess.Box;
-import chess.base.Piece;
+import chess.base.PieceSameMove;
 
 //Rook: Moves horizontally or vertically any number of squares.
 public class Rook extends PieceSameMove {
