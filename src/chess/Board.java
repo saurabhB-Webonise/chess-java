@@ -1,6 +1,11 @@
 package chess;
 
+import chess.base.Piece;
 import chess.pieces.*;
+import chess.utils.Colors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     public int row = 8;
@@ -14,6 +19,74 @@ public class Board {
         }
         return boxes[row][column];
     }
+
+
+    public  List<Piece> killedList = new ArrayList<>();
+
+    public  void makeMove(int toRow, int toColumn, Board board, Box box) {
+
+        int oldRow = box.getRow();
+        int oldColum = box.getColumn();
+        Box start = box;
+        Box end = board.boxes[toRow][toColumn];
+        try {
+            if (start.isBoxVacant()) {
+                System.out.println("Illegal No Piece picked : " + start.getRow() + start.getColumn());
+                return;
+            }
+
+            if (!box.getPiece().canMove(board, start, end)) {
+                System.out.println("Illegal move : " + end.getRow() + end.getColumn());
+                return;
+            }
+
+            end.setRow(toRow);
+            end.setColumn(toColumn);
+            if (end.getPiece() != null) {
+                Piece piece = end.getPiece();
+                piece.setKilled(true);
+                killedList.add(piece);
+            }
+            end.setPiece(start.getPiece());
+            //System.out.println(box.getPiece().getName());
+            if (end.getPiece() instanceof Pawn) {
+                Pawn pawn = (Pawn) end.getPiece();
+                pawn.setInitialMove(false);
+            }
+            board.boxes[toRow][toColumn] = end;
+            board.boxes[oldRow][oldColum].setPiece(null);
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Illegal move : " + end.getRow() + end.getColumn());
+        }
+    }
+
+    public  void display(Board board) {
+        try {
+            for (int r = 0; r < board.row; r++) {
+                for (int c = 0; c < board.column; c++) {
+                    Piece piece = board.boxes[r][c].getPiece();
+                    if ((r + c) % 2 == 0) {
+                        if (piece != null) {
+                            System.out.print(Colors.WHITE_BG + (piece.isWhite() ? "" : Colors.GRAY_TEXT) + "\t" + piece.getName() + "\t" + Colors.RESET);
+                        } else {
+                            System.out.print(Colors.WHITE_BG + Colors.YELLOW_TEXT + "\t" + r + "" + c + "\t" + Colors.RESET);
+                        }
+                    } else {
+                        if (piece != null) {
+                            System.out.print(Colors.BLACK_BG + (piece.isWhite() ? "" : Colors.GRAY_TEXT) + "\t" + piece.getName() + "\t" + Colors.RESET);
+                        } else {
+                            System.out.print(Colors.BLACK_BG + Colors.YELLOW_TEXT + "\t" + r + "" + c + "\t" + Colors.RESET);
+                        }
+                    }
+                }
+                System.out.println();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
 
     public void initialPoint() {
         // initialize white pieces
