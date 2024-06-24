@@ -7,8 +7,6 @@ public class Box {
     private Piece piece;
     private int row;
     private int column;
-    private String boxColor;
-
 
     public Box(int row, int column, Piece piece) {
         this.setPiece(piece);

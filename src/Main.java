@@ -3,12 +3,12 @@ import chess.Box;
 import chess.base.Piece;
 import chess.pieces.Pawn;
 import chess.utils.Colors;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-
 
     public static List<Piece> killedList = new ArrayList<>();
 
@@ -19,7 +19,7 @@ public class Main {
         Box start = box;
         Box end = board.boxes[toRow][toColumn];
         try {
-            if (start.getPiece() == null) {
+            if (start.isBoxVacant()) {
                 System.out.println("Illegal No Piece picked : " + start.getRow() + start.getColumn());
                 return;
             }

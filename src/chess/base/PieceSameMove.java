@@ -51,10 +51,9 @@ public abstract class PieceSameMove extends Piece {
     }
 
 
-    boolean isPathClear2(Board board, Box start, Box end) {
+   private boolean isPathClear2(Board board, Box start, Box end) {
 
         boolean f1 = (end.getRow() - start.getRow() < 0);
-
         boolean isClear = true;
 
         int row = end.getRow();
@@ -94,6 +93,7 @@ public abstract class PieceSameMove extends Piece {
     }
 
     public boolean bishopMoves(List<String> validMoves, Board board, Box start, Box end) {
+        if (isStartAndEndAreSame(start, end)) return CANNOT_MOVE;
         if (validMoves.contains(getMove(start, end))) {
             if (!isPathClear2(board, start, end)) return CANNOT_MOVE;
             if (end.isBoxVacant()) return CAN_MOVE;

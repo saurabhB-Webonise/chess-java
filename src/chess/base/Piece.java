@@ -7,8 +7,8 @@ abstract public class Piece {
     private boolean killed = false;
     private boolean white = false;
     private String name = "";
-
-
+    public final boolean CAN_MOVE = true;
+    public final boolean CANNOT_MOVE = false;
 
     public Piece(boolean white) {
         this.setWhite(white);
@@ -30,13 +30,6 @@ abstract public class Piece {
         this.killed = killed;
     }
 
-    public final boolean CAN_MOVE = true;
-    public final boolean CANNOT_MOVE = false;
-
-    public abstract boolean canMove(Board board, Box start, Box end);
-
-    public abstract String getName();
-
     public boolean isSamePiece(Box start, Box end) {
         return start.getPiece().isWhite() == end.getPiece().isWhite();
     }
@@ -48,4 +41,8 @@ abstract public class Piece {
     public boolean isStartAndEndAreSame(Box start, Box end) {
         return (end.getRow() == start.getRow() && end.getColumn() == start.getColumn());
     }
+
+    public abstract boolean canMove(Board board, Box start, Box end);
+
+    public abstract String getName();
 }
